@@ -5,7 +5,7 @@ public class ChangeDefenseEffect : Effect {
 
 	// Use this for initialization
 	void Start () {
-	
+		didIt = false;
 	}
 	
 	// Update is called once per frame
@@ -19,12 +19,18 @@ public class ChangeDefenseEffect : Effect {
 	}
 
 	public override void doEffect() {
-		//do whatever
-		didIt = true;
-
+		if (gameObject.GetComponent ("Armor") != null) {
+			didIt = true;
+			Armor armorComponent = gameObject.GetComponent ("Armor") as Armor;
+			armorComponent.armor += magnitude;
+		}
 	}
 
 	public override void reverseEffect() {
-		//stub
+		if (didIt) {
+			Armor armorComponent = gameObject.GetComponent ("Armor") as Armor;
+			armorComponent.armor -= magnitude;
+		}
+		Destroy (this);
 	}
 }
